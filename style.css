@@ -1,0 +1,34 @@
+.edit{
+    background-color: white;
+    border:none;
+}
+.edit:hover{
+    background-color: cadetblue;
+}
+.addbtn:hover{
+    background-color: rgb(82, 239, 82);
+}
+/* .wholediv{
+    display: flex;
+    justify-content: center;
+} */
+.deletebtn{
+    background-color: white;
+    color: red;
+    border: none;
+    padding: 6px 10px;
+  border-radius: 5px;
+}
+table{
+    margin: 10px;
+}
+td{
+    padding: 2px;
+    padding-right: 10px;
+}
+tr:hover {
+  background-color: #f8f9fa; /* light hover */
+}
+.quote{
+    color: brown;
+}
