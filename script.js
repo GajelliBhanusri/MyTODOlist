@@ -1,10 +1,15 @@
 let todoArray=[
- { task: "Buy groceries", time: "10:00 AM" },
-  { task: "Attend team meeting", time: "11:30 AM" },
-  { task: "Finish project report", time: "2:00 PM" },
-  { task: "Go for a run", time: "5:00 PM" },
-  { task: "Cook dinner", time: "7:00 PM" },
-  { task: "Read a book", time: "9:00 PM" }
+    { task: "Revise Java concepts", time: "7:00 AM" },
+    { task: "Read 1-2 pages of a book", time: "8:00 AM" },
+    { task: "Job search", time: "09:15 AM" },
+    { task: "Coding practice", time: "10:00 AM" },
+    { task: "Complete two LeetCode problems", time: "12:00 PM" },
+    { task: "Take a short nap / relaxation", time: "2:00 PM" },
+    { task: "Work on project or assignments", time: "4:00 PM" },
+    { task: "Evening walk or exercise", time: "6:00 PM" },
+    { task: "Revise notes. Note what you learned today", time: "8:00 PM" },
+    { task: "Plan tasks for tomorrow", time: "9:30 PM" },
+    { task: "Sleep on time", time: "11:00 PM" }
 ];
 function display(){
     let newList="";

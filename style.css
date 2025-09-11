@@ -8,10 +8,11 @@
 .addbtn:hover{
     background-color: rgb(82, 239, 82);
 }
-/* .wholediv{
+.wholediv{
     display: flex;
-    justify-content: center;
-} */
+    flex-direction: column;
+    align-items: center;
+}
 .deletebtn{
     background-color: white;
     color: red;
@@ -23,12 +24,17 @@ table{
     margin: 10px;
 }
 td{
-    padding: 2px;
+    padding: 1px;
     padding-right: 10px;
 }
 tr:hover {
-  background-color: #f8f9fa; /* light hover */
+  background-color: #f8f9fa;
 }
 .quote{
     color: brown;
+}
+@media(max_width:500px){
+    .wholediv{
+        background-color: aquamarine;
+    }
 }
