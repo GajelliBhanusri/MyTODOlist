@@ -1,17 +1,11 @@
-let todoArray=[
-    { task: "Revise Java concepts", time: "7:00 AM" },
-    { task: "Read 1-2 pages of a book", time: "8:00 AM" },
-    { task: "Job search", time: "09:15 AM" },
-    { task: "Coding practice", time: "10:00 AM" },
-    { task: "Complete two LeetCode problems", time: "12:00 PM" },
-    { task: "Take a short nap / relaxation", time: "2:00 PM" },
-    { task: "Work on project or assignments", time: "4:00 PM" },
-    { task: "Evening walk or exercise", time: "6:00 PM" },
-    { task: "Revise notes. Note what you learned today", time: "8:00 PM" },
-    { task: "Plan tasks for tomorrow", time: "9:30 PM" },
-    { task: "Sleep on time", time: "11:00 PM" }
-];
-function display(){
+let API="http://localhost:3000/todos";
+async function getTodos(){
+    let res=await fetch(API);
+    let todoArray=await res.json();
+    display(todoArray);
+}
+getTodos();
+function display(todoArray){
     let newList="";
     for(let index in todoArray){
         newList+=`
@@ -19,10 +13,10 @@ function display(){
             <td>${todoArray[index].task}</td>
             <td>${todoArray[index].time}</td>
             <td>
-            <button onclick="deleteTask(${index});" class="deletebtn"><i class="fa-solid fa-trash"></i></button>
+            <button onclick="deleteTask(${todoArray[index].id});" class="deletebtn"><i class="fa-solid fa-trash"></i></button>
             </td>
             <td>
-            <button onclick="editTask(${index});" type="button" class="btn btn-primary edit" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-pencil" style="color: #110d1c;"></i></button>
+            <button onclick="editTask(${todoArray[index].id}, '${todoArray[index].task}', '${todoArray[index].time}')" type="button" class="btn btn-primary edit" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-pencil" style="color: #110d1c;"></i></button>
             </td>
         </tr>
         `
@@ -35,12 +29,14 @@ function display(){
     let refElem=document.getElementById("ref");
     refElem.innerHTML=table;
 }
-display();
-function deleteTask(index){
-    todoArray.splice(index,1);
-    display();
+async function deleteTask(id){
+    await fetch(`${API}/${id}`,{
+        method:"Delete"
+    }
+    );
+    getTodos();
 }
-function addTask(e){
+async function addTask(e){
     e.preventDefault();
     let allForms=document.forms;
     let taskElem=allForms.addTaskForm.task;
@@ -48,29 +44,38 @@ function addTask(e){
     let obj={
         task:taskElem.value,
         time:timeFormat(timeElem.value)
+    };
+    let res=await fetch(API,{
+        method: "POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(obj)
+    });
+    if(res.ok){
+        getTodos();
     }
-    todoArray.push(obj);
-    display();
 }
-let i=0;
-function editTask(index){
-    i=index;
+let currentId=null;
+function editTask(id,task,time){
+    currentId=id;
     let taskElem=document.getElementById("taskTextBox");
     let timeElem=document.getElementById("timeTextBox");
-    let selectedTask=todoArray[index];
-    taskElem.value=selectedTask.task;
-    timeElem.value=selectedTask.time;
+    taskElem.value=task;
+    timeElem.value=time;
 
 }
-function save(){
+async function save(){
     let taskElem=document.getElementById("taskTextBox");
     let timeElem=document.getElementById("timeTextBox");
     let obj={
         task:taskElem.value,
         time:timeFormat(timeElem.value)
-    }
-    todoArray[i]=obj;
-    display();
+    };
+    await fetch(`${API}/${currentId}`,{
+        method:"PUT",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(obj)
+    });
+    getTodos();
 }
 function timeFormat(time){
     let [hour,minute]=time.split(":");
